@@ -1,0 +1,23 @@
+{
+  "name": "node-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DimaOsinnii/node-express.git"
+  },
+  "author": "Dmytro Osinnii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DimaOsinnii/node-express/issues"
+  },
+  "homepage": "https://github.com/DimaOsinnii/node-express#readme",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "lodash": "^4.17.21"
+  }
+}
