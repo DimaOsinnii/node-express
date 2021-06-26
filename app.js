@@ -1,18 +1,26 @@
-const http = require('http');
+const http = require('http')
+const {readFileSync} =require('fs');
+
+const homePage = readFileSync('front-app/index.html')
 
 const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        res.end('Welcome to our home page')
+    console.log(req.url)
+    const url = req.url;
+    if (url === '/') {
+        res.writeHead(200, { 'content-type': 'text/html' })
+        res.write('<h1>Home page</h1>')
+        res.end()
     }
-    if (req.url === '/about') {
-        res.end('Working correct=)')
+    else if (url === '/about') {
+        res.writeHead(200, { 'content-type': 'text/html' })
+        res.write('<h1>About page</h1>')
+        res.end()
     }
-    res.end(`
-    <h1>Oops!</h1>
-    <p>We can't seem to find the page you are looking for</p>
-    <a href="/">back home</a>
-    `)
-
+    else  {
+        res.writeHead(404, { 'content-type': 'text/html' })
+        res.write('<h1>page not found</h1>')
+        res.end()
+    }
 });
 
-server.listen(5000);
+server.listen(5000)

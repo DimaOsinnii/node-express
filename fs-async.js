@@ -1,4 +1,5 @@
-const { readFile, writeFile } = require('fs')
+const { readFile, writeFile } = require('fs').promises
+const util = require('util')
 
 console.log('start')
 
@@ -27,3 +28,28 @@ readFile('./content/first.txt', 'utf8', (err, res) => {
 })
 
 console.log('next step')
+
+const start = async () => {
+    try {
+        const first = await readFile('./content/first.txt', 'utf8');
+        const second = await readFile('./content/second.txt', 'utf8');
+        await writeFile(
+            './content/result-mind-grenade.txt',
+            `THIS IS AWSOME : ${first} ${second}`,
+            { flag: 'a' })
+        console.log(first, second);
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+start()
+
+/*const getText = (path) => {
+    return new Promise( (res, rej) => {
+        readFile(path, 'utf8', (err, data) => {
+            err ? rej(err) : res(data)
+        })
+    })
+}*/
