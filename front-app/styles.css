@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background: darkslateblue;
+    transition-duration: 1s;
+    cursor: pointer;
+}
+p {
+    color: black;
+    font-weight: bold;
+    font-size: 100%;
+}

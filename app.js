@@ -1,26 +1,35 @@
-const http = require('http')
-const {readFileSync} =require('fs');
+const express = require('express');
+const path = require('path');
 
-const homePage = readFileSync('front-app/index.html')
+const {data} = require('./data')
 
-const server = http.createServer((req, res) => {
-    console.log(req.url)
-    const url = req.url;
-    if (url === '/') {
-        res.writeHead(200, { 'content-type': 'text/html' })
-        res.write('<h1>Home page</h1>')
-        res.end()
+const app = express()
+
+// setup static and middleware
+app.use(express.static('./front-app'))
+
+app.get('/data', (req, res) => {
+    const newData = data.map((item) => {
+        const {id, desc, img} = item;
+        return {id, desc, img}
+    });
+    res.json(newData)
+})
+
+app.get('/data/:dataID', (req, res) => {
+    const {dataID} = req.params;
+    const singleData = data.find((item) => item.id === Number(dataID))
+
+    if (!singleData) {
+      return res.status(404).send('<h1>404 NOT FOUND</h1>')
     }
-    else if (url === '/about') {
-        res.writeHead(200, { 'content-type': 'text/html' })
-        res.write('<h1>About page</h1>')
-        res.end()
-    }
-    else  {
-        res.writeHead(404, { 'content-type': 'text/html' })
-        res.write('<h1>page not found</h1>')
-        res.end()
-    }
+    return res.json(singleData)
+})
+
+app.all('*', (req, res) => {
+    res.status(404).send('<h1>404 NOT FOUND</h1>')
+})
+
+app.listen(5000, () => {
+    console.log('server is listening on port 5000...')
 });
-
-server.listen(5000)
