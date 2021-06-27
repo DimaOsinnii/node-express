@@ -26,6 +26,27 @@ app.get('/data/:dataID', (req, res) => {
     return res.json(singleData)
 })
 
+app.get('/data/v1/query', (req, res) => {
+    const {search, limit} = req.query
+    let sortedArray = [...data]
+
+    if (search) {
+        sortedArray = sortedArray.filter((item) => {
+            return item.desc.startsWith(search)
+        })
+    }
+
+    if (limit) {
+        sortedArray = sortedArray.slice(0, Number(limit))
+    }
+
+    if (sortedArray.length < 1) {
+       return  res.status(200).json({success: true, data: [{name: 'Artpunk'}]})
+    }
+
+   return res.status(200).json(sortedArray)
+})
+
 app.all('*', (req, res) => {
     res.status(404).send('<h1>404 NOT FOUND</h1>')
 })
